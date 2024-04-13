@@ -16,6 +16,7 @@
 		DE597DC02BC6C2B6002DFB11 /* nano_1UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DBF2BC6C2B6002DFB11 /* nano_1UITestsLaunchTests.swift */; };
 		DE597DCD2BC6C2C6002DFB11 /* CalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DCC2BC6C2C6002DFB11 /* CalenderView.swift */; };
 		DE597DCF2BC6E0B9002DFB11 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DCE2BC6E0B9002DFB11 /* InputView.swift */; };
+		DE7D0BE62BCAB76200A13FBF /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		DE597DBF2BC6C2B6002DFB11 /* nano_1UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nano_1UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DE597DCC2BC6C2C6002DFB11 /* CalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderView.swift; sourceTree = "<group>"; };
 		DE597DCE2BC6E0B9002DFB11 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePicker.swift; path = nano_1/ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 		DE597D962BC6C2B4002DFB11 = {
 			isa = PBXGroup;
 			children = (
+				DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */,
 				DE597DA12BC6C2B5002DFB11 /* nano_1 */,
 				DE597DB22BC6C2B6002DFB11 /* nano_1Tests */,
 				DE597DBC2BC6C2B6002DFB11 /* nano_1UITests */,
@@ -265,6 +268,7 @@
 			files = (
 				DE597DA52BC6C2B5002DFB11 /* ContentView.swift in Sources */,
 				DE597DCF2BC6E0B9002DFB11 /* InputView.swift in Sources */,
+				DE7D0BE62BCAB76200A13FBF /* ImagePicker.swift in Sources */,
 				DE597DA32BC6C2B5002DFB11 /* nano_1App.swift in Sources */,
 				DE597DCD2BC6C2C6002DFB11 /* CalenderView.swift in Sources */,
 			);
