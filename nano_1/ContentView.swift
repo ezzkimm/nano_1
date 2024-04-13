@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var date = Date()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        Text("hello")
+        DatePicker(
+            "Start Date",
+            selection: $date,
+            displayedComponents: [.date]
+        )
+        .datePickerStyle(.graphical)
     }
+
 }
 
 #Preview {
     ContentView()
 }
+
+
+
