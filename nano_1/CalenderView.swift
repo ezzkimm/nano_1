@@ -11,7 +11,9 @@ struct CalenderView: View {
     @State private var month: Date = Date()
     @State private var clickedCurrentMonthDates: Date?
     
-
+    @State private var showingSheet = false
+    
+    
     
     init(
         month: Date = Date(),
@@ -22,26 +24,35 @@ struct CalenderView: View {
     }
     
     var body: some View {
-        VStack {
-            headerView
-                .frame(alignment: .top)
-
-            calendarGridView
+        VStack{
+            VStack {
+                headerView
+                    .frame(alignment: .top)
+                
+                calendarGridView
+            }
+            .padding(15)
+            .frame(width: 393, height: 700, alignment: .top)
+            .sheet(isPresented: $showingSheet) {
+                // Sheet 내용
+                
+                Text("선택된 날짜가 오늘보다 이전입니다.")
+            }
+            
+            
+            
+            Button(action: {},
+                   label: {
+                Text("일기쓰기")
+                    .frame(width: 100, height: 35)
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                    .fontWeight(.bold)
+            })
+            
         }
-        .padding(15)
-        .frame(width: 393, height: 700, alignment: .top)
-
         
-        
-        Button(action: {},
-               label: {
-            Text("일기쓰기")
-                .frame(width: 100, height: 35)
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .cornerRadius(30)
-                .fontWeight(.bold)
-        })
     }
     
     // MARK: - 헤더 뷰
@@ -142,6 +153,12 @@ struct CalenderView: View {
                         let date = getDate(for: index)
                         clickedCurrentMonthDates = date
                     }
+                    if let clickedDate = clickedCurrentMonthDates, Calendar.current.compare(clickedDate, to: Date(), toGranularity: .day) == .orderedAscending {
+                        // 선택된 날짜가 오늘보다 이전이면 Sheet 표시
+                        showingSheet = true
+                        
+                        
+                    }
                     
                 }
             }
@@ -152,7 +169,7 @@ struct CalenderView: View {
 // MARK: - 일자 셀 뷰
 private struct CellView: View {
     @State private var showingSheet = false
-
+    
     private var day: Int
     private var clicked: Bool
     private var isToday: Bool
@@ -196,7 +213,7 @@ private struct CellView: View {
                 .frame(width: 45, height: 45)
                 .padding(.bottom, -5)
                 .overlay(Text(String(day)))
-
+            
             
             Circle()
                 .fill(backgroundColor)
@@ -204,8 +221,9 @@ private struct CellView: View {
                 .foregroundColor(textColor)
                 .frame(width: 30, height: 30)
                 .padding(.bottom, -5)
-
-
+            
+            
+            
             if clicked {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.red)

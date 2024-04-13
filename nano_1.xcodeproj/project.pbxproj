@@ -49,7 +49,7 @@
 		DE597DBF2BC6C2B6002DFB11 /* nano_1UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nano_1UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DE597DCC2BC6C2C6002DFB11 /* CalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderView.swift; sourceTree = "<group>"; };
 		DE597DCE2BC6E0B9002DFB11 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
-		DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePicker.swift; path = nano_1/ImagePicker.swift; sourceTree = "<group>"; };
+		DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,6 @@
 		DE597D962BC6C2B4002DFB11 = {
 			isa = PBXGroup;
 			children = (
-				DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */,
 				DE597DA12BC6C2B5002DFB11 /* nano_1 */,
 				DE597DB22BC6C2B6002DFB11 /* nano_1Tests */,
 				DE597DBC2BC6C2B6002DFB11 /* nano_1UITests */,
@@ -104,6 +103,7 @@
 				DE597DA22BC6C2B5002DFB11 /* nano_1App.swift */,
 				DE597DA42BC6C2B5002DFB11 /* ContentView.swift */,
 				DE597DCC2BC6C2C6002DFB11 /* CalenderView.swift */,
+				DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */,
 				DE597DCE2BC6E0B9002DFB11 /* InputView.swift */,
 				DE597DA62BC6C2B5002DFB11 /* Assets.xcassets */,
 				DE597DA82BC6C2B5002DFB11 /* Preview Content */,
