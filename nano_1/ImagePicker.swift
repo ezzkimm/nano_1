@@ -16,8 +16,8 @@ import UIKit
 
 
 struct ImagePicker: UIViewControllerRepresentable {
-    @Binding var selectedImage: UIImage    //선택된 이미지를 bindging 형식으로 저장
-    @Environment(\.presentationMode) private var presentationMode    //photo 라이브러리 해지를 위한 변수
+    @Binding var selectedImage: UIImage     //선택된 이미지를 bindging 형식으로 저장
+    @Environment(\.presentationMode) private var presentationMode   //photo 라이브러리 해지를 위한 변수
     
     
     final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -49,8 +49,6 @@ struct ImagePicker: UIViewControllerRepresentable {
         return imagePicker
     }
 
-    
-    
     
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
         

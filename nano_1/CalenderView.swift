@@ -13,6 +13,8 @@ struct CalenderView: View {
     
     @State private var showingSheet = false
     
+//    @State private var clickedDate =
+    
     
     
     init(
@@ -35,15 +37,17 @@ struct CalenderView: View {
             .frame(width: 393, height: 700, alignment: .top)
             .sheet(isPresented: $showingSheet) {
                 // Sheet 내용
-                
                 Text("선택된 날짜가 오늘보다 이전입니다.")
             }
             
             
             
-            Button(action: {},
+            Button(action: {
+                
+                
+            },
                    label: {
-                Text("일기쓰기")
+                Text("오늘쓰기")
                     .frame(width: 100, height: 35)
                     .foregroundColor(.white)
                     .background(Color.blue)
@@ -128,6 +132,8 @@ struct CalenderView: View {
         let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
         let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
         
+        
+        
         return LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
             ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
                 Group {
@@ -156,7 +162,7 @@ struct CalenderView: View {
                     if let clickedDate = clickedCurrentMonthDates, Calendar.current.compare(clickedDate, to: Date(), toGranularity: .day) == .orderedAscending {
                         // 선택된 날짜가 오늘보다 이전이면 Sheet 표시
                         showingSheet = true
-                        
+                    
                         
                     }
                     

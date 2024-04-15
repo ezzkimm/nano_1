@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE0A2ECE2BCCAD9F0052650C /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0A2ECD2BCCAD9F0052650C /* DailyView.swift */; };
 		DE597DA32BC6C2B5002DFB11 /* nano_1App.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DA22BC6C2B5002DFB11 /* nano_1App.swift */; };
 		DE597DA52BC6C2B5002DFB11 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DA42BC6C2B5002DFB11 /* ContentView.swift */; };
 		DE597DA72BC6C2B5002DFB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE597DA62BC6C2B5002DFB11 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DE0A2ECD2BCCAD9F0052650C /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
 		DE597D9F2BC6C2B5002DFB11 /* nano_1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nano_1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE597DA22BC6C2B5002DFB11 /* nano_1App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nano_1App.swift; sourceTree = "<group>"; };
 		DE597DA42BC6C2B5002DFB11 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				DE597DCE2BC6E0B9002DFB11 /* InputView.swift */,
 				DE597DA62BC6C2B5002DFB11 /* Assets.xcassets */,
 				DE597DA82BC6C2B5002DFB11 /* Preview Content */,
+				DE0A2ECD2BCCAD9F0052650C /* DailyView.swift */,
 			);
 			path = nano_1;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE0A2ECE2BCCAD9F0052650C /* DailyView.swift in Sources */,
 				DE597DA52BC6C2B5002DFB11 /* ContentView.swift in Sources */,
 				DE597DCF2BC6E0B9002DFB11 /* InputView.swift in Sources */,
 				DE7D0BE62BCAB76200A13FBF /* ImagePicker.swift in Sources */,

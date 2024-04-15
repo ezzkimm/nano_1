@@ -25,7 +25,7 @@ struct InputView: View {
     
     
     var body: some View {
-        VStack {
+        VStack{
             HStack{
                 Text(monthTitle(from: today))
                     .font(.title2)
@@ -35,26 +35,26 @@ struct InputView: View {
                 //                Circle()
                 //                    .frame(width: 45, height: 45)
             }
-            
-            Button(action: {self.openPhoto = true})
-            {Text("사진 추가")}
-            
-            Image(uiImage: self.image)
-                .resizable()
-                .scaledToFill()
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .edgesIgnoringSafeArea(.all)
-            
-            
-            
-            TextField("오늘의 일기", text: $diary, axis: .vertical)
-                .textFieldStyle(.roundedBorder)
-            
-            TextEditor(text: $diary)
-                .border(.black)
-                .frame(height: 300)
+            ScrollView{
+                    Button(action: {self.openPhoto = true})
+                    {Text("사진 추가")}
+                    
+                    Image(uiImage: self.image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    
+                    
+                    TextField("오늘의 일기", text: $diary, axis: .vertical)
+                        .textFieldStyle(.roundedBorder)
+                    
+                    TextEditor(text: $diary)
+                        .border(.black)
+                        .frame(height: 300)
+            }
         }
-        
         .padding(25)
         .frame(width: 393, height: 700, alignment: .top)
         .sheet(isPresented: $openPhoto) {
