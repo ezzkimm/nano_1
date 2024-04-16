@@ -17,49 +17,66 @@ import Foundation
 import SwiftUI
 
 struct InputView: View {
-    @State private var diary : String = ""
-    @State private var today: Date = Date()
     
+    //    @Binding var tInput = todayInput()
+    
+    @State var todayInfo: todayInput = todayInput()
+    
+    @Binding var todayInfoList: [todayInput]
+    //    @State private var diary : String = ""
+    //    @State private var today: Date = Date()
     @State private var openPhoto = false
-    @State private var image = UIImage()
+    //    @State private var image = UIImage()
+    @Environment(\.presentationMode) var presentationMode
     
     
     var body: some View {
+        
         VStack{
             HStack{
-                Text(monthTitle(from: today))
-                    .font(.title2)
-                    .foregroundColor(.black)
-                    .fontWeight(.bold)
+//                Text(monthTitle(from:todayInfo.today))
+//                Text(monthTitle(from: today))
+//                    .font(.title2)
+//                    .foregroundColor(.black)
+//                    .fontWeight(.bold)
                 //                Spacer()
                 //                Circle()
                 //                    .frame(width: 45, height: 45)
             }
             ScrollView{
-                    Button(action: {self.openPhoto = true})
-                    {Text("사진 추가")}
-                    
-                    Image(uiImage: self.image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    
-                    
-                    TextField("오늘의 일기", text: $diary, axis: .vertical)
-                        .textFieldStyle(.roundedBorder)
-                    
-                    TextEditor(text: $diary)
-                        .border(.black)
-                        .frame(height: 300)
+                Button(action: {self.openPhoto = true})
+                {Text("사진 추가")}
+                
+                Image(uiImage: todayInfo.image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .edgesIgnoringSafeArea(.all)
+                
+                
+                
+                //                    TextField("오늘의 일기", text: $diary, axis: .vertical)
+                //                        .textFieldStyle(.roundedBorder)
+                
+                TextEditor(text: $todayInfo.diary)
+                //                TextEditor(text: $diary)
+                    .border(.black)
+                    .frame(height: 300)
+                //                Text(todayInfo.diary)
+                
             }
         }
         .padding(25)
         .frame(width: 393, height: 700, alignment: .top)
         .sheet(isPresented: $openPhoto) {
-            ImagePicker(selectedImage: $image)
-        }
+            ImagePicker(selectedImage: $todayInfo.image)}
+        .navigationBarTitle("\(monthTitle(from:todayInfo.today))", displayMode: .inline)
+        .navigationBarItems(trailing: Button("저장")
+                            {
+            todayInfoList.append(todayInfo)
+            todayInfo = todayInput()
+            presentationMode.wrappedValue.dismiss()
+        } )
     }
 }
 
@@ -84,7 +101,7 @@ private extension InputView {
     }
 }
 
-
-#Preview {
-    InputView()
-}
+//
+//#Preview {
+//    InputView()
+//}

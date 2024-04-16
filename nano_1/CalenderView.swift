@@ -8,56 +8,72 @@
 import SwiftUI
 
 struct CalenderView: View {
+    
+    //    @Binding var todayInfo: todayInput
+    
+    @State private var todayInfoList: [todayInput] = []
+
+    
+//    @State var todayInfo: todayInput = todayInput()
     @State private var month: Date = Date()
     @State private var clickedCurrentMonthDates: Date?
     
     @State private var showingSheet = false
     
-//    @State private var clickedDate =
+    //    @State private var clickedDate =
     
     
+    //
+    //    init(
+    //        month: Date = Date(),
+    //        clickedCurrentMonthDates: Date? = nil
+    //    ) {
+    //        _month = State(initialValue: month)
+    //        _clickedCurrentMonthDates = State(initialValue: clickedCurrentMonthDates)
+    //    }
     
-    init(
-        month: Date = Date(),
-        clickedCurrentMonthDates: Date? = nil
-    ) {
-        _month = State(initialValue: month)
-        _clickedCurrentMonthDates = State(initialValue: clickedCurrentMonthDates)
-    }
     
     var body: some View {
-        VStack{
-            VStack {
-                headerView
-                    .frame(alignment: .top)
+//        NavigationStack{
+            
+            VStack{
+                VStack {
+                    headerView
+                        .frame(alignment: .top)
+                    
+                    calendarGridView
+                }
+                .padding(15)
+                .frame(width: 393, height: 700, alignment: .top)
+                .sheet(isPresented: $showingSheet) {
+                    // Sheet 내용
+                    Text("선택된 날짜가 오늘보다 이전입니다.")
+                }
                 
-                calendarGridView
+                //                    Image(uiImage: todayInfo.image)
+                //                        .resizable()
+                //                        .scaledToFill()
+                //                        .frame(minWidth: 0, maxWidth: .infinity)
+                //                        .edgesIgnoringSafeArea(.all)
+                
+                NavigationLink(destination: InputView(todayInfoList: $todayInfoList)
+                ) {
+                    Text("오늘쓰기")
+                        .frame(width: 100, height: 35)
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .cornerRadius(30)
+                        .fontWeight(.bold)
+                }
             }
-            .padding(15)
-            .frame(width: 393, height: 700, alignment: .top)
-            .sheet(isPresented: $showingSheet) {
-                // Sheet 내용
-                Text("선택된 날짜가 오늘보다 이전입니다.")
-            }
-            
-            
-            
-            Button(action: {
-                
-                
-            },
-                   label: {
-                Text("오늘쓰기")
-                    .frame(width: 100, height: 35)
-                    .foregroundColor(.white)
-                    .background(Color.blue)
-                    .cornerRadius(30)
-                    .fontWeight(.bold)
-            })
             
         }
-        
-    }
+//    }
+    
+    
+    
+    
+    
     
     // MARK: - 헤더 뷰
     private var headerView: some View {
@@ -162,7 +178,7 @@ struct CalenderView: View {
                     if let clickedDate = clickedCurrentMonthDates, Calendar.current.compare(clickedDate, to: Date(), toGranularity: .day) == .orderedAscending {
                         // 선택된 날짜가 오늘보다 이전이면 Sheet 표시
                         showingSheet = true
-                    
+                        
                         
                     }
                     
@@ -171,6 +187,9 @@ struct CalenderView: View {
         }
     }
 }
+
+
+
 
 // MARK: - 일자 셀 뷰
 private struct CellView: View {

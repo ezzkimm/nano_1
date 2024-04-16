@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
+
+
+
 
 @main
 struct nano_1App: App {
+    @State var tInput = todayInput()
+    
     var body: some Scene {
         WindowGroup {
-            InputView()
+//            InputView()
+            CalenderView()
         }
+//        .modelContainer(ModelContainer)
     }
 }
