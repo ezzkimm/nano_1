@@ -21,14 +21,6 @@ import MCEmojiPicker
 
 struct InputView: View {
     @Environment(\.modelContext) private var modelContext
-    
-    
-    //    @Binding var tInput = todayInput()
-    
-    //    @State var todayInfo: todayInput = todayInput()
-    
-    //    @Binding var DairyDict: [String:todayInput]
-    //    @Binding var todayInfoList: [todayInput]
     @Binding var today: String
 
     
@@ -36,8 +28,7 @@ struct InputView: View {
     @State private var openPhoto = false
     @State private var image = UIImage()
     
-    @State var selectedEmoji: String = " "
-    
+    @State var selectedEmoji: String = ""
     
     @State private var showAlert = false
     @State private var emojiPresented = false
@@ -61,7 +52,7 @@ struct InputView: View {
                 //                Circle()
                 //                    .frame(width: 45, height: 45)
             }
-            Text("\(today)")
+            Text(convertDateString(today))
                 .font(.title2)
                 .fontWeight(.bold)
 
@@ -69,6 +60,8 @@ struct InputView: View {
                 VStack(spacing: 20){
                     Text(selectedEmoji)
                         .font(.system(size: 80))
+                        .frame(height: 100)
+//                        .background(Color.gray)
                     
                     Button(action: {self.emojiPresented = true})
                     {Text("이모지 선택")}
@@ -76,6 +69,7 @@ struct InputView: View {
                             isPresented: $emojiPresented,
                             selectedEmoji: $selectedEmoji
                         )
+
                     ZStack{
                         Rectangle()
                             .cornerRadius(30)
@@ -117,34 +111,15 @@ struct InputView: View {
 }
 
 
-
-
 private extension InputView {
-    /// 날짜 표시 2024년 4월 18일
-    func monthTitle(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY년 MMMM dd일"
+    func convertDateString(_ dateString: String) -> String {
+        let year = dateString.prefix(4) // 처음 4자리 추출
+        let monthStartIndex = dateString.index(dateString.startIndex, offsetBy: 4)
+        let monthEndIndex = dateString.index(dateString.startIndex, offsetBy: 6)
+        let month = dateString[monthStartIndex..<monthEndIndex] // 5번째부터 6번째 자리 추출
+        let day = dateString.suffix(2) // 마지막 2자리 추출
         
-        formatter.locale=Locale(identifier: "ko_KO")
-        //dateFormatter.dateStyle = .long
-        return formatter.string(from: date)
-    }
-    
-    // 날짜 20240418
-    func calendardayFormatter(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYYMMdd"
-        
-        return formatter.string(from: date)
-    }
-    
-    
-    
-    /// 요일 추출
-    func day(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.setLocalizedDateFormatFromTemplate("E")
-        return dateFormatter.string(from: date)
+        return "\(year)년 \(month)월 \(day)일"
     }
 }
 

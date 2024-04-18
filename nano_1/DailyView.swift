@@ -24,7 +24,6 @@ struct DailyView: View {
     }
 }
 
-
 struct ContentShowView: View {
     @State private var isTapped = false
     @Query var diaries: [DiaryInput]
@@ -45,13 +44,19 @@ struct ContentShowView: View {
             
             if diaries.isEmpty
             {
-                VStack{
+                VStack(spacing: 20){
                     Image(systemName: "square.and.pencil")
                         .foregroundColor(isTapped ? .white : .black)
                         .font(isTapped ? .system(size: 1) : .system(.body))
+                    
                     Text("밀린 일기 쓰러 가기")
                         .foregroundColor(isTapped ? .white : .black)
                         .font(isTapped ? .system(size: 1) : .system(.body))
+                        .bold()
+                    Image("cow")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    
                 }
                 .onTapGesture {
                     isTapped.toggle()
@@ -62,28 +67,25 @@ struct ContentShowView: View {
             
             else{
                 VStack(spacing: 30){
-                    
                     Text(todaydate)
                         .font(.title2)
                         .fontWeight(.bold)
                     
-                    ForEach(diaries){ text in
-                        Text(text.selectEmoji)
-                            .font(.system(size: 80))
-                        
-                        ZStack{
-                            Rectangle()
-                                .cornerRadius(30)
-                                .foregroundColor(Color(hex: "f2f2f2"))
-                                .frame(height: 300)
-                            VStack{
-                                Text(text.content)
-                                    .padding(20)
-                                //                        .background(Color.cyan)
-                                Spacer()
-                            }
+                    Text(diaries[0].selectEmoji)
+                        .font(.system(size: 80))
+                    
+                    ZStack{
+                        Rectangle()
+                            .cornerRadius(30)
+                            .foregroundColor(Color(hex: "f2f2f2"))
                             .frame(height: 300)
+                        VStack{
+                            Text(diaries[0].content)
+                                .padding(20)
+                            //                        .background(Color.cyan)
+                            Spacer()
                         }
+                        .frame(height: 300)
                     }
                 }
                 .padding(30)

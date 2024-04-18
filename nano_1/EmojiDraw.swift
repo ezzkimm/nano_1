@@ -32,7 +32,7 @@ struct EmojiDraw: View {
 
 
 #Preview {
-    EmojiDraw(today: "20240411")
+    EmojiDraw(today: "20240418")
         .modelContainer(for: DiaryInput.self, inMemory: true)
 
 }
