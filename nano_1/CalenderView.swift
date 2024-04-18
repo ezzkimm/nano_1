@@ -223,13 +223,6 @@ private struct CellView: View {
         }
     }
     
-    private var backgroundColor2: Color {
-        if isCurrentMonthDay {
-            return Color(hex: "C7E7FF")
-        } else {
-            return Color.white
-        }
-    }
     
     fileprivate init(
         date: Date,
@@ -250,25 +243,33 @@ private struct CellView: View {
     }
     
     
+    private var backgroundColor2: Color {
+        if isCurrentMonthDay {
+            if diaries.isEmpty{
+                return Color(hex: "C7E7FF")
+            }
+            else
+            {
+                return Color.blue
+            }
+        } else {
+            return Color.white
+        }
+    }
+    
     
     
     var body: some View {
         VStack {
-            if diaries.isEmpty{
+            
+            ZStack{
                 Circle()
                     .fill(backgroundColor2)
-                    .frame(width: 45, height: 45)
-                    .padding(.bottom, -5)
-            }
-            else{
-                ZStack{
-                    Circle()
-                        .fill(Color.blue)
+                if diaries.isEmpty == false && isCurrentMonthDay{
                     Text(diaries[0].selectEmoji).font(.system(size: 30))
-                }
-                .frame(width: 45, height: 45)
-                .padding(.bottom, -5)
-            }
+                }}
+            .frame(width: 45, height: 45)
+            .padding(.bottom, -5)
             
             
             Circle()
