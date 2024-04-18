@@ -67,7 +67,7 @@ struct ContentShowView: View {
             
             else{
                 VStack(spacing: 30){
-                    Text(todaydate)
+                    Text(convertDateString(todaydate))
                         .font(.title2)
                         .fontWeight(.bold)
                     
