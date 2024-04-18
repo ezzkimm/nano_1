@@ -18,25 +18,44 @@ struct ResultView: View {
 }
 
 struct ContenView: View {
+    
+    
+    var todaydate: String = "20240418"
+    var content: String = "오늘은 리니니니닌ㄴㄴ와 카페에 와서 마지막 작업을 하는 중이다 집에 가고 싶다. 왜 위로 정렬이 안될까 개쓰레기 같은 스위프트"
+    var selectEmoji: String = "💙"
+    
     var body: some View {
-        NavigationView {
-            VStack(spacing: 30) {
-                Text("당신은 동전을 던질것입니다\n앞면 과 뒷면 중에 하나를 선택해 주세요.")
-                    .multilineTextAlignment(.center)
-                
-                
-                NavigationLink(destination: ResultView(choice: "앞면")) {
-                    Text("앞면을 선택하셨습니다.")
+        VStack(spacing: 30){
+            
+            Text(todaydate)
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            
+            Text(selectEmoji)
+                .font(.system(size: 80))
+            
+            ZStack{
+                Rectangle()
+                    .cornerRadius(30)
+                    .foregroundColor(Color(hex: "f2f2f2"))
+                    .frame(height: 300)
+                VStack{
+                    Text(content)
+                        .padding(20)
+                    //                        .background(Color.cyan)
+                    Spacer()
                 }
-                
-                NavigationLink(destination: ResultView(choice: "뒷면")) {
-                    Text("뒷면을 선택하셨습니다.")
-                }
+                .frame(height: 300)
             }
-//            .navigationBarTitle("Navigation")
+            
         }
+        .padding(30)
+
     }
 }
+
+
 
 
 #Preview {

@@ -15,75 +15,112 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
+import MCEmojiPicker
+
 
 struct InputView: View {
+    @Environment(\.modelContext) private var modelContext
+    
     
     //    @Binding var tInput = todayInput()
     
-    @State var todayInfo: todayInput = todayInput()
+    //    @State var todayInfo: todayInput = todayInput()
     
-    @Binding var todayInfoList: [todayInput]
-    //    @State private var diary : String = ""
-    //    @State private var today: Date = Date()
+    //    @Binding var DairyDict: [String:todayInput]
+    //    @Binding var todayInfoList: [todayInput]
+    @Binding var today: String
+
+    
+    @State private var diary: String = ""
     @State private var openPhoto = false
-    //    @State private var image = UIImage()
-    @Environment(\.presentationMode) var presentationMode
+    @State private var image = UIImage()
+    
+    @State var selectedEmoji: String = " "
+    
+    
+    @State private var showAlert = false
+    @State private var emojiPresented = false
+    
+
+    @Environment(\.dismiss) var dismiss
+    
+    
     
     
     var body: some View {
         
         VStack{
             HStack{
-//                Text(monthTitle(from:todayInfo.today))
-//                Text(monthTitle(from: today))
-//                    .font(.title2)
-//                    .foregroundColor(.black)
-//                    .fontWeight(.bold)
+                //                Text(monthTitle(from:todayInfo.today))
+                //                Text(monthTitle(from: today))
+                //                    .font(.title2)
+                //                    .foregroundColor(.black)
+                //                    .fontWeight(.bold)
                 //                Spacer()
                 //                Circle()
                 //                    .frame(width: 45, height: 45)
             }
+            Text("\(today)")
+                .font(.title2)
+                .fontWeight(.bold)
+
             ScrollView{
-                Button(action: {self.openPhoto = true})
-                {Text("사진 추가")}
-                
-                Image(uiImage: todayInfo.image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .edgesIgnoringSafeArea(.all)
-                
-                
-                
-                //                    TextField("오늘의 일기", text: $diary, axis: .vertical)
-                //                        .textFieldStyle(.roundedBorder)
-                
-                TextEditor(text: $todayInfo.diary)
-                //                TextEditor(text: $diary)
-                    .border(.black)
-                    .frame(height: 300)
-                //                Text(todayInfo.diary)
-                
+                VStack(spacing: 20){
+                    Text(selectedEmoji)
+                        .font(.system(size: 80))
+                    
+                    Button(action: {self.emojiPresented = true})
+                    {Text("이모지 선택")}
+                        .emojiPicker(
+                            isPresented: $emojiPresented,
+                            selectedEmoji: $selectedEmoji
+                        )
+                    ZStack{
+                        Rectangle()
+                            .cornerRadius(30)
+                            .foregroundColor(Color(hex: "f2f2f2"))
+                            .frame(height: 300)
+                        TextEditor(text: $diary)
+                            .scrollContentBackground(.hidden)
+                            .padding(20)
+                    }
+                    .padding(.bottom, 50)
+
+                    
+                    Text("저장")
+                        .frame(width: 100, height: 35)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(30)
+                        .fontWeight(.bold)
+                        .onTapGesture {
+                        if diary.isEmpty || selectedEmoji.isEmpty {
+                            showAlert = true
+                        }
+                        else{
+                            let newDiaryInput = DiaryInput(time: today, content: diary, selectEmoji: selectedEmoji)
+                            modelContext.insert(newDiaryInput)
+                            dismiss()
+                        }
+                    }
+
+                }
             }
         }
-        .padding(25)
+        .padding(30)
         .frame(width: 393, height: 700, alignment: .top)
-        .sheet(isPresented: $openPhoto) {
-            ImagePicker(selectedImage: $todayInfo.image)}
-        .navigationBarTitle("\(monthTitle(from:todayInfo.today))", displayMode: .inline)
-        .navigationBarItems(trailing: Button("저장")
-                            {
-            todayInfoList.append(todayInfo)
-            todayInfo = todayInput()
-            presentationMode.wrappedValue.dismiss()
-        } )
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("알림"), message: Text("내용을 입력해주세요."), dismissButton: .default(Text("확인")))
+        }
     }
 }
 
 
 
+
 private extension InputView {
-    /// 월 표시
+    /// 날짜 표시 2024년 4월 18일
     func monthTitle(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY년 MMMM dd일"
@@ -93,6 +130,16 @@ private extension InputView {
         return formatter.string(from: date)
     }
     
+    // 날짜 20240418
+    func calendardayFormatter(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYYMMdd"
+        
+        return formatter.string(from: date)
+    }
+    
+    
+    
     /// 요일 추출
     func day(from date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -101,7 +148,9 @@ private extension InputView {
     }
 }
 
-//
-//#Preview {
-//    InputView()
-//}
+
+
+
+#Preview {
+    InputView(today: .constant("20240418"))
+}

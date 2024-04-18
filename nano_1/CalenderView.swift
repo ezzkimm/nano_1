@@ -6,73 +6,50 @@
 //
 
 import SwiftUI
+import SwiftData
+
+import UIKit
+
+
 
 struct CalenderView: View {
-    
-    //    @Binding var todayInfo: todayInput
-    
-    @State private var todayInfoList: [todayInput] = []
-
-    
-//    @State var todayInfo: todayInput = todayInput()
-    @State private var month: Date = Date()
-    @State private var clickedCurrentMonthDates: Date?
-    
-    @State private var showingSheet = false
-    
-    //    @State private var clickedDate =
-    
-    
-    //
-    //    init(
-    //        month: Date = Date(),
-    //        clickedCurrentMonthDates: Date? = nil
-    //    ) {
-    //        _month = State(initialValue: month)
-    //        _clickedCurrentMonthDates = State(initialValue: clickedCurrentMonthDates)
-    //    }
-    
+    @State var month: Date = Date()
+    @State var clickedCurrentMonthDates: Date?
+    @State var showingSheet = false
     
     var body: some View {
-//        NavigationStack{
-            
-            VStack{
-                VStack {
-                    headerView
-                        .frame(alignment: .top)
-                    
-                    calendarGridView
+        @State var todayString: String = calendardayString(in: month)
+        
+        
+        NavigationStack{
+            VStack {
+                headerView
+                    .frame(alignment: .top)
+                calendarGridView
+            }
+            .padding(15)
+            .frame(width: 393, height: 700, alignment: .top)
+            .sheet(isPresented: $showingSheet) {
+                // Sheet 내용
+                var DateString: String {
+                    CalenderView.calendardayFormatter.string(from: clickedCurrentMonthDates ?? Date())
                 }
-                .padding(15)
-                .frame(width: 393, height: 700, alignment: .top)
-                .sheet(isPresented: $showingSheet) {
-                    // Sheet 내용
-                    Text("선택된 날짜가 오늘보다 이전입니다.")
-                }
-                
-                //                    Image(uiImage: todayInfo.image)
-                //                        .resizable()
-                //                        .scaledToFill()
-                //                        .frame(minWidth: 0, maxWidth: .infinity)
-                //                        .edgesIgnoringSafeArea(.all)
-                
-                NavigationLink(destination: InputView(todayInfoList: $todayInfoList)
-                ) {
-                    Text("오늘쓰기")
-                        .frame(width: 100, height: 35)
-                        .foregroundColor(.white)
-                        .background(Color.blue)
-                        .cornerRadius(30)
-                        .fontWeight(.bold)
-                }
+                DailyView(today: .constant(DateString))
             }
             
-        }
-//    }
-    
-    
-    
-    
+            NavigationLink(destination: InputView(today: $todayString)
+            ) {
+                Text("오늘쓰기")
+                    .frame(width: 100, height: 35)
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                    .fontWeight(.bold)
+                
+            }
+            
+        } /*NavigationStack*/
+    } /*body*/
     
     
     // MARK: - 헤더 뷰
@@ -80,15 +57,6 @@ struct CalenderView: View {
         VStack {
             HStack {
                 yearMonthView
-                
-                //                Button(
-                //                    action: { },
-                //                    label: {
-                //                        Image(systemName: "list.bullet")
-                //                            .font(.title)
-                //                            .foregroundColor(.black)
-                //                    }
-                //                )
             }
             .padding(.horizontal, 10)
             .padding(.bottom, 30)
@@ -107,11 +75,8 @@ struct CalenderView: View {
     // MARK: - 연월 표시
     private var yearMonthView: some View {
         HStack(alignment: .center, spacing: 20) {
-            
-            
             Text(month, formatter: Self.calendarHeaderDateFormatter)
                 .font(.title.bold())
-            
             Spacer()
             Button(
                 action: {
@@ -149,7 +114,6 @@ struct CalenderView: View {
         let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
         
         
-        
         return LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
             ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
                 Group {
@@ -174,96 +138,105 @@ struct CalenderView: View {
                     if 0 <= index && index < daysInMonth {
                         let date = getDate(for: index)
                         clickedCurrentMonthDates = date
-                    }
-                    if let clickedDate = clickedCurrentMonthDates, Calendar.current.compare(clickedDate, to: Date(), toGranularity: .day) == .orderedAscending {
-                        // 선택된 날짜가 오늘보다 이전이면 Sheet 표시
-                        showingSheet = true
-                        
-                        
+                        //                        2024-04-18 00:00:00 +0000
                     }
                     
+                    if let clickedDate = clickedCurrentMonthDates {
+                        let comparisonResult = Calendar.current.compare(clickedDate, to: Date(), toGranularity: .day)
+                        if comparisonResult == .orderedAscending || comparisonResult == .orderedSame {
+                            // 선택된 날짜가 오늘과 같거나 이전이면 Sheet 표시
+                            showingSheet = true
+                        }
+                    }
                 }
             }
         }
     }
-}
-
-
-
-
-// MARK: - 일자 셀 뷰
-private struct CellView: View {
-    @State private var showingSheet = false
     
-    private var day: Int
-    private var clicked: Bool
-    private var isToday: Bool
-    private var isCurrentMonthDay: Bool
-    private var textColor: Color {
-        if clicked {
-            return Color.white
-        } else if isCurrentMonthDay {
-            return Color.black
-        } else {
-            return Color.gray
-        }
-    }
-    private var backgroundColor: Color {
-        if clicked {
-            return Color.black
-        } else if isToday {
-            return Color.gray
-        } else {
-            return Color.white
-        }
-    }
-    
-    
-    fileprivate init(
-        day: Int,
-        clicked: Bool = false,
-        isToday: Bool = false,
-        isCurrentMonthDay: Bool = true
-    ) {
-        self.day = day
-        self.clicked = clicked
-        self.isToday = isToday
-        self.isCurrentMonthDay = isCurrentMonthDay
-    }
-    
-    fileprivate var body: some View {
-        VStack {
-            Circle()
-                .fill(Color.blue)
-                .frame(width: 45, height: 45)
-                .padding(.bottom, -5)
-                .overlay(Text(String(day)))
-            
-            
-            Circle()
-                .fill(backgroundColor)
-                .overlay(Text(String(day)))
-                .foregroundColor(textColor)
-                .frame(width: 30, height: 30)
-                .padding(.bottom, -5)
-            
-            
-            
+    // MARK: - 일자 셀 뷰
+    private struct CellView: View {
+        
+        private var day: Int
+        private var clicked: Bool
+        private var isToday: Bool
+        private var isCurrentMonthDay: Bool
+        
+        private var textColor: Color {
             if clicked {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(.red)
-                    .frame(width: 10, height: 10)
-                
+                return Color.white
+            } else if isCurrentMonthDay {
+                return Color.black
             } else {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .frame(width: 10, height: 10)
+                return Color.gray
             }
-            Spacer()
         }
-        .frame(height: 90)
+        private var backgroundColor: Color {
+            if clicked {
+                return Color.black
+            } else if isToday {
+                return Color.gray
+            } else {
+                return Color.white
+            }
+        }
+        
+        private var backgroundColor2: Color {
+            if isCurrentMonthDay {
+                return Color.blue
+            } else {
+                return Color.white
+            }
+        }
+        
+        fileprivate init(
+            day: Int,
+            clicked: Bool = false,
+            isToday: Bool = false,
+            isCurrentMonthDay: Bool = true
+        ) {
+            self.day = day
+            self.clicked = clicked
+            self.isToday = isToday
+            self.isCurrentMonthDay = isCurrentMonthDay
+        }
+        
+        var body: some View {
+            VStack {
+                ZStack{
+                    Circle()
+                        .fill(backgroundColor2)
+                        .frame(width: 45, height: 45)
+                        .padding(.bottom, -5)
+                    //                    .overlay(Text(String(day)))
+                    //                    ContentShowView(today: String(day))
+                }
+                Circle()
+                    .fill(backgroundColor)
+                //                .overlay(Text(month))
+                    .overlay(Text(String(day)))
+                    .foregroundColor(textColor)
+                    .frame(width: 30, height: 30)
+                    .padding(.bottom, -5)
+                
+                
+                
+                if clicked {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.red)
+                        .frame(width: 10, height: 10)
+                    
+                } else {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.white)
+                        .frame(width: 10, height: 10)
+                }
+                Spacer()
+            }
+            .frame(height: 90)
+        }
     }
 }
+
 
 // MARK: - CalendarView Static 프로퍼티
 private extension CalenderView {
@@ -279,11 +252,24 @@ private extension CalenderView {
         return formatter
     }()
     
+    static let calendardayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYYMMdd"
+        return formatter
+    }()
+    
     static let weekdaySymbols: [String] = Calendar.current.shortWeekdaySymbols
 }
 
 // MARK: - 내부 로직 메서드
 private extension CalenderView {
+    func calendardayString(in today: Date?) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYYMMdd"
+        return formatter.string(from: today ?? Date())
+    }
+    
+    
     /// 특정 해당 날짜
     func getDate(for index: Int) -> Date {
         let calendar = Calendar.current

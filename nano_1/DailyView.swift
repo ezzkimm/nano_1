@@ -6,13 +6,97 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct DailyView: View {
+    @Binding var today: String
+    @State var isPast: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            ContentShowView(today: today, setIsPast: { value in
+                self.isPast = value
+            })
+            if isPast{
+                InputView(today: $today)
+            }
+        }
     }
 }
 
+
+struct ContentShowView: View {
+    @State private var isTapped = false
+    @Query var diaries: [DiaryInput]
+    @Environment(\.dismiss) var dismiss
+    var setIsPast: (Bool) -> Void
+    var todaydate: String
+    
+    init(today: String, setIsPast: @escaping (Bool) -> Void) {
+        self._diaries = Query(filter: #Predicate<DiaryInput> {
+            $0.time == today
+        })
+        self.todaydate = today
+        self.setIsPast = setIsPast
+    }
+    
+    var body: some View {
+        VStack {
+            
+            if diaries.isEmpty
+            {
+                VStack{
+                    Image(systemName: "square.and.pencil")
+                        .foregroundColor(isTapped ? .white : .black)
+                        .font(isTapped ? .system(size: 1) : .system(.body))
+                    Text("밀린 일기 쓰러 가기")
+                        .foregroundColor(isTapped ? .white : .black)
+                        .font(isTapped ? .system(size: 1) : .system(.body))
+                }
+                .onTapGesture {
+                    isTapped.toggle()
+                    setIsPast(true)
+                }
+                
+            }
+            
+            else{
+                VStack(spacing: 30){
+                    
+                    Text(todaydate)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
+                    ForEach(diaries){ text in
+                        Text(text.selectEmoji)
+                            .font(.system(size: 80))
+                        
+                        ZStack{
+                            Rectangle()
+                                .cornerRadius(30)
+                                .foregroundColor(Color(hex: "f2f2f2"))
+                                .frame(height: 300)
+                            VStack{
+                                Text(text.content)
+                                    .padding(20)
+                                //                        .background(Color.cyan)
+                                Spacer()
+                            }
+                            .frame(height: 300)
+                        }
+                    }
+                }
+                .padding(30)
+                
+            }
+        }
+    }
+}
+
+
+
+
 #Preview {
-    DailyView()
+    DailyView(today: .constant("20240415"))
+        .modelContainer(for: DiaryInput.self, inMemory: true)
 }

@@ -20,6 +20,8 @@
 		DE5ACE5F2BCD0CF9008F3670 /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5ACE5E2BCD0CF9008F3670 /* InputData.swift */; };
 		DE7D0BE62BCAB76200A13FBF /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */; };
 		DE85CF452BCE032B00879A8C /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85CF442BCE032B00879A8C /* File.swift */; };
+		DE9BBC192BD0C78A00C20C49 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DE9BBC182BD0C78A00C20C49 /* MCEmojiPicker */; };
+		DEBB55B22BD1245E001B31B9 /* EmojiDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBB55B12BD1245E001B31B9 /* EmojiDraw.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,7 @@
 		DE5ACE5E2BCD0CF9008F3670 /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		DE85CF442BCE032B00879A8C /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		DEBB55B12BD1245E001B31B9 /* EmojiDraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiDraw.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE9BBC192BD0C78A00C20C49 /* MCEmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				DE597DA12BC6C2B5002DFB11 /* nano_1 */,
-				DE597DB22BC6C2B6002DFB11 /* nano_1Tests */,
 				DE597DBC2BC6C2B6002DFB11 /* nano_1UITests */,
 				DE597DA02BC6C2B5002DFB11 /* Products */,
 			);
@@ -111,10 +114,12 @@
 				DE597DA22BC6C2B5002DFB11 /* nano_1App.swift */,
 				DE597DCC2BC6C2C6002DFB11 /* CalenderView.swift */,
 				DE597DCE2BC6E0B9002DFB11 /* InputView.swift */,
+				DE0A2ECD2BCCAD9F0052650C /* DailyView.swift */,
 				DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */,
 				DE597DA42BC6C2B5002DFB11 /* ContentView.swift */,
-				DE0A2ECD2BCCAD9F0052650C /* DailyView.swift */,
 				DE5ACE5E2BCD0CF9008F3670 /* InputData.swift */,
+				DEBB55B12BD1245E001B31B9 /* EmojiDraw.swift */,
+				DE597DB22BC6C2B6002DFB11 /* nano_1Tests */,
 				DE85CF442BCE032B00879A8C /* File.swift */,
 			);
 			path = nano_1;
@@ -161,6 +166,9 @@
 			dependencies = (
 			);
 			name = nano_1;
+			packageProductDependencies = (
+				DE9BBC182BD0C78A00C20C49 /* MCEmojiPicker */,
+			);
 			productName = nano_1;
 			productReference = DE597D9F2BC6C2B5002DFB11 /* nano_1.app */;
 			productType = "com.apple.product-type.application";
@@ -233,6 +241,9 @@
 				Base,
 			);
 			mainGroup = DE597D962BC6C2B4002DFB11;
+			packageReferences = (
+				DE9BBC172BD0C78A00C20C49 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
+			);
 			productRefGroup = DE597DA02BC6C2B5002DFB11 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -278,6 +289,7 @@
 				DE5ACE5F2BCD0CF9008F3670 /* InputData.swift in Sources */,
 				DE0A2ECE2BCCAD9F0052650C /* DailyView.swift in Sources */,
 				DE597DA52BC6C2B5002DFB11 /* ContentView.swift in Sources */,
+				DEBB55B22BD1245E001B31B9 /* EmojiDraw.swift in Sources */,
 				DE597DCF2BC6E0B9002DFB11 /* InputView.swift in Sources */,
 				DE7D0BE62BCAB76200A13FBF /* ImagePicker.swift in Sources */,
 				DE85CF452BCE032B00879A8C /* File.swift in Sources */,
@@ -606,6 +618,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DE9BBC172BD0C78A00C20C49 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DE9BBC182BD0C78A00C20C49 /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE9BBC172BD0C78A00C20C49 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DE597D972BC6C2B4002DFB11 /* Project object */;
 }
