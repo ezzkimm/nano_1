@@ -16,6 +16,7 @@ struct CalenderView: View {
     
     
     @State var showingSheet = false
+    @State var future_alert = false
     
     init(
         month: Date = Date(),
@@ -27,39 +28,45 @@ struct CalenderView: View {
     
     
     var body: some View {
-        //        @State var todayString: String = calendardayString(in: month)
+        @State var todayString: String = calendardayString(in: month)
         
         
-        //        NavigationStack{
-        VStack {
-            headerView
-                .frame(alignment: .top)
-            calendarGridView
-        }
-        .padding(15)
-        .frame(width: 393, height: 700, alignment: .top)
-        .sheet(isPresented: $showingSheet) {
-            // Sheet 내용
-            var DateString: String {
-                CalenderView.calendardayFormatter.string(from: clickedCurrentMonthDates ?? Date())
+        NavigationStack{
+            VStack {
+                headerView
+                    .frame(alignment: .top)
+                calendarGridView
             }
-            DailyView(today: .constant(DateString))
-        }
-        
-        
-        //            NavigationLink(destination: InputView(today: $todayString)
-        //            ) {
-        Text("오늘쓰기")
-            .frame(width: 100, height: 35)
-            .foregroundColor(.white)
-            .background(Color.blue)
-            .cornerRadius(30)
-            .fontWeight(.bold)
-        
-        
-        //            }
-        
-        //        } /*NavigationStack*/
+            .padding(15)
+            .frame(width: 393, height: 700, alignment: .top)
+//            .background(Color.gray)
+            .sheet(isPresented: $showingSheet) {
+                // Sheet 내용
+                var DateString: String {
+                    CalenderView.calendardayFormatter.string(from: clickedCurrentMonthDates ?? Date())
+                }
+                DailyView(today: .constant(DateString))
+            }
+            .alert(isPresented: $future_alert){
+                Alert(
+                    title: Text("급하다 급해!"),
+                    message: Text("미래의 내가 뭐라합니다요"),
+                    dismissButton: .default(Text("오늘꺼나 다시쓰기"))
+                )}
+            
+            
+            NavigationLink(destination: InputView(today: $todayString))
+            {
+                Text("오늘일기 다시 쓰기")
+                    .frame(width: 170, height: 35)
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(15)
+                    .fontWeight(.bold)
+                
+                
+            }
+        } /*NavigationStack*/
     } /*body*/
     
     
@@ -70,7 +77,7 @@ struct CalenderView: View {
                 yearMonthView
             }
             .padding(.horizontal, 10)
-            .padding(.bottom, 30)
+            .padding(.bottom, 20)
             
             HStack {
                 ForEach(Self.weekdaySymbols.indices, id: \.self) { symbol in
@@ -79,7 +86,7 @@ struct CalenderView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-            .padding(.bottom, 20)
+            .padding(.bottom, 10)
         }
     }
     
@@ -113,9 +120,6 @@ struct CalenderView: View {
                     .onTapGesture {
                         month = Date() // 여기서 'month' 변수를 업데이트합니다. 실제 사용에 맞게 조정하세요.
                     }
-                
-                
-                
                 Button(
                     action: {
                         changeMonth(by: 1)
@@ -182,6 +186,10 @@ struct CalenderView: View {
                         if comparisonResult == .orderedAscending || comparisonResult == .orderedSame {
                             // 선택된 날짜가 이번 달에 속하며, 오늘과 같거나 이전이면 Sheet 표시
                             showingSheet = true
+                        }
+                        else
+                        {
+                            future_alert = true
                         }
                     }
                 }
