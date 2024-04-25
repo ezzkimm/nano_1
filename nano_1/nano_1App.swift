@@ -8,8 +8,6 @@
 import SwiftUI
 import SwiftData
 
-
-
 @main
 struct nano_1App: App {
     
