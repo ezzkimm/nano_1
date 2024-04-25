@@ -40,7 +40,6 @@ struct InputView: View {
     
     
     var body: some View {
-        
         VStack{
             Text(convertDateString(today))
                 .font(.title2)
@@ -99,19 +98,6 @@ struct InputView: View {
         }
     }
 }
-
-
-//private extension InputView {
-//    func convertDateString(_ dateString: String) -> String {
-//        let year = dateString.prefix(4) // 처음 4자리 추출
-//        let monthStartIndex = dateString.index(dateString.startIndex, offsetBy: 4)
-//        let monthEndIndex = dateString.index(dateString.startIndex, offsetBy: 6)
-//        let month = dateString[monthStartIndex..<monthEndIndex] // 5번째부터 6번째 자리 추출
-//        let day = dateString.suffix(2) // 마지막 2자리 추출
-//        
-//        return "\(year)년 \(month)월 \(day)일"
-//    }
-//}
 
 
 

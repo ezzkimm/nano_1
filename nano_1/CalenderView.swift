@@ -39,11 +39,12 @@ struct CalenderView: View {
             }
             .padding(15)
             .frame(width: 393, height: 700, alignment: .top)
-//            .background(Color.gray)
+            //            .background(Color.gray)
             .sheet(isPresented: $showingSheet) {
                 // Sheet 내용
                 var DateString: String {
-                    CalenderView.calendardayFormatter.string(from: clickedCurrentMonthDates ?? Date())
+                    calendardayString(in: clickedCurrentMonthDates ?? Date())
+//                    CalenderView.calendardayFormatter.string(from: clickedCurrentMonthDates ?? Date())
                 }
                 DailyView(today: .constant(DateString))
             }
@@ -115,10 +116,9 @@ struct CalenderView: View {
                     .foregroundColor(.gray)
                     .fontWeight(.bold)
                     .background(Color(hex: "f2f2f2"))
-                
                     .cornerRadius(10)
                     .onTapGesture {
-                        month = Date() // 여기서 'month' 변수를 업데이트합니다. 실제 사용에 맞게 조정하세요.
+                        month = Date()
                     }
                 Button(
                     action: {
@@ -142,8 +142,6 @@ struct CalenderView: View {
         let lastDayOfMonthBefore = numberOfDays(in: previousMonth())
         let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
         let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
-        //        let full: String = today.formattedCalendarDayDate
-        //        let full: String = today.formattedCalendarDayDate
         
         
         return LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
@@ -155,8 +153,10 @@ struct CalenderView: View {
                         let clicked = clickedCurrentMonthDates == date
                         let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
                         
-                        CellView(date: date, day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true)
-                        //                            .onAppear{print(date)}
+                        
+                        let dateString = calendardayString(in: date)
+                        
+                        CellView(dateString: dateString, day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true)
                         
                     } else if let prevMonthDate = Calendar.current.date(
                         byAdding: .day,
@@ -165,8 +165,7 @@ struct CalenderView: View {
                     ) {
                         let day = Calendar.current.component(.day, from: prevMonthDate)
                         
-                        //                        Text(month)
-                        CellView(date: prevMonthDate, day: day, isCurrentMonthDay: false)
+                        CellView(dateString: calendardayString(in: prevMonthDate), day: day, isCurrentMonthDay: false)
                         
                     }
                 }
@@ -197,114 +196,9 @@ struct CalenderView: View {
         }
     }
 }
-// MARK: - 일자 셀 뷰
-private struct CellView: View {
-    @Query var diaries: [DiaryInput]
-    
-    
-    private var day: Int
-    private var date: Date
-    private var clicked: Bool
-    private var isToday: Bool
-    private var isCurrentMonthDay: Bool
-    
-    private var DateString: String {
-        CalenderView.calendardayFormatter.string(from: date)
-    }
-    
-    private var textColor: Color {
-        if clicked {
-            return Color.white
-        } else if isCurrentMonthDay {
-            return Color.black
-        } else {
-            return Color.gray
-        }
-    }
-    private var backgroundColor: Color {
-        if clicked {
-            return Color.black
-        } else if isToday {
-            return Color.gray
-        } else {
-            return Color.white
-        }
-    }
-    
-    
-    fileprivate init(
-        date: Date,
-        day: Int,
-        clicked: Bool = false,
-        isToday: Bool = false,
-        isCurrentMonthDay: Bool = true
-    ) {
-        self.date = date
-        self.day = day
-        self.clicked = clicked
-        self.isToday = isToday
-        self.isCurrentMonthDay = isCurrentMonthDay
-        self._diaries = Query(filter: #Predicate<DiaryInput> {
-            $0.time == DateString
-        })
-        
-    }
-    
-    
-    private var backgroundColor2: Color {
-        if isCurrentMonthDay {
-            if diaries.isEmpty{
-                return Color(hex: "C7E7FF")
-            }
-            else
-            {
-                return Color.blue
-            }
-        } else {
-            return Color.white
-        }
-    }
-    
-    
-    
-    var body: some View {
-        VStack {
-            
-            ZStack{
-                Circle()
-                    .fill(backgroundColor2)
-                if diaries.isEmpty == false && isCurrentMonthDay{
-                    Text(diaries[0].selectEmoji).font(.system(size: 30))
-                }}
-            .frame(width: 45, height: 45)
-            .padding(.bottom, -5)
-            
-            
-            Circle()
-                .fill(backgroundColor)
-                .overlay(Text(String(day)))
-                .foregroundColor(textColor)
-                .frame(width: 30, height: 30)
-                .padding(.bottom, -5)
-            
-            if clicked {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(.red)
-                    .frame(width: 10, height: 10)
-                
-            } else {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .frame(width: 10, height: 10)
-            }
-            Spacer()
-        }
-        .frame(height: 90)
-    }
-}
 
 // MARK: - CalendarView Static 프로퍼티
-private extension CalenderView {
+extension CalenderView {
     var today: Date {
         let now = Date()
         let components = Calendar.current.dateComponents([.year, .month, .day], from: now)
@@ -317,17 +211,16 @@ private extension CalenderView {
         return formatter
     }()
     
-    static let calendardayFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYYMMdd"
-        return formatter
-    }()
-    
+//    static let calendardayFormatter: DateFormatter = {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "YYYYMMdd"
+//        return formatter
+//    }()
+//    
     static let weekdaySymbols: [String] = Calendar.current.shortWeekdaySymbols
-}
-
-// MARK: - 내부 로직 메서드
-private extension CalenderView {
+    
+    
+    // MARK: - 내부 로직 메서드
     func calendardayString(in today: Date?) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYYMMdd"
@@ -386,31 +279,6 @@ private extension CalenderView {
         self.month = adjustedMonth(by: value)
     }
     
-    
-    //    /// 이전 월로 이동 가능한지 확인
-    //    func canMoveToPreviousMonth() -> Bool {
-    //        let currentDate = Date()
-    //        let calendar = Calendar.current
-    //        let targetDate = calendar.date(byAdding: .month, value: -3, to: currentDate) ?? currentDate
-    //
-    //        if adjustedMonth(by: -1) < targetDate {
-    //            return false
-    //        }
-    //        return true
-    //    }
-    //
-    //    /// 다음 월로 이동 가능한지 확인
-    //    func canMoveToNextMonth() -> Bool {
-    //        let currentDate = Date()
-    //        let calendar = Calendar.current
-    //        let targetDate = calendar.date(byAdding: .month, value: 3, to: currentDate) ?? currentDate
-    //
-    //        if adjustedMonth(by: 1) > targetDate {
-    //            return false
-    //        }
-    //        return true
-    //    }
-    
     /// 변경하려는 월 반환
     func adjustedMonth(by value: Int) -> Date {
         if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: month) {
@@ -422,15 +290,13 @@ private extension CalenderView {
 }
 
 // MARK: - Date 익스텐션
-extension Date {
-    static let calendarDayDateFormatter: DateFormatter = {
+private extension Date {
+    /// MMMM yyyy dd
+    var formattedCalendarDayDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy dd"
-        return formatter
-    }()
-    
-    var formattedCalendarDayDate: String {
-        return Date.calendarDayDateFormatter.string(from: self)
+        
+        return formatter.string(from: self)
     }
 }
 

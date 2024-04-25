@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		DE0A2ECE2BCCAD9F0052650C /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0A2ECD2BCCAD9F0052650C /* DailyView.swift */; };
 		DE597DA32BC6C2B5002DFB11 /* nano_1App.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DA22BC6C2B5002DFB11 /* nano_1App.swift */; };
-		DE597DA52BC6C2B5002DFB11 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DA42BC6C2B5002DFB11 /* ContentView.swift */; };
 		DE597DA72BC6C2B5002DFB11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE597DA62BC6C2B5002DFB11 /* Assets.xcassets */; };
 		DE597DAA2BC6C2B5002DFB11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE597DA92BC6C2B5002DFB11 /* Preview Assets.xcassets */; };
 		DE597DB42BC6C2B6002DFB11 /* nano_1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DB32BC6C2B6002DFB11 /* nano_1Tests.swift */; };
@@ -18,10 +17,12 @@
 		DE597DCD2BC6C2C6002DFB11 /* CalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DCC2BC6C2C6002DFB11 /* CalenderView.swift */; };
 		DE597DCF2BC6E0B9002DFB11 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DCE2BC6E0B9002DFB11 /* InputView.swift */; };
 		DE5ACE5F2BCD0CF9008F3670 /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5ACE5E2BCD0CF9008F3670 /* InputData.swift */; };
-		DE7D0BE62BCAB76200A13FBF /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */; };
 		DE85CF452BCE032B00879A8C /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85CF442BCE032B00879A8C /* File.swift */; };
 		DE9BBC192BD0C78A00C20C49 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DE9BBC182BD0C78A00C20C49 /* MCEmojiPicker */; };
+		DEB90B942BD9E41800122C47 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB90B932BD9E41800122C47 /* CellView.swift */; };
+		DEB90B962BD9EDF800122C47 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597DA42BC6C2B5002DFB11 /* ContentView.swift */; };
 		DEBB55B22BD1245E001B31B9 /* EmojiDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBB55B12BD1245E001B31B9 /* EmojiDraw.swift */; };
+		DEEE86ED2BD9DF2B00D5AC49 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		DE5ACE5E2BCD0CF9008F3670 /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		DE85CF442BCE032B00879A8C /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		DEB90B932BD9E41800122C47 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		DEBB55B12BD1245E001B31B9 /* EmojiDraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiDraw.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,14 +115,15 @@
 				DE597DA62BC6C2B5002DFB11 /* Assets.xcassets */,
 				DE597DA22BC6C2B5002DFB11 /* nano_1App.swift */,
 				DE597DCC2BC6C2C6002DFB11 /* CalenderView.swift */,
+				DEB90B932BD9E41800122C47 /* CellView.swift */,
 				DE597DCE2BC6E0B9002DFB11 /* InputView.swift */,
 				DE0A2ECD2BCCAD9F0052650C /* DailyView.swift */,
-				DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */,
-				DE597DA42BC6C2B5002DFB11 /* ContentView.swift */,
 				DE5ACE5E2BCD0CF9008F3670 /* InputData.swift */,
-				DEBB55B12BD1245E001B31B9 /* EmojiDraw.swift */,
 				DE597DB22BC6C2B6002DFB11 /* nano_1Tests */,
 				DE85CF442BCE032B00879A8C /* File.swift */,
+				DE597DA42BC6C2B5002DFB11 /* ContentView.swift */,
+				DEBB55B12BD1245E001B31B9 /* EmojiDraw.swift */,
+				DE7D0BE52BCAB76200A13FBF /* ImagePicker.swift */,
 			);
 			path = nano_1;
 			sourceTree = "<group>";
@@ -288,10 +291,11 @@
 			files = (
 				DE5ACE5F2BCD0CF9008F3670 /* InputData.swift in Sources */,
 				DE0A2ECE2BCCAD9F0052650C /* DailyView.swift in Sources */,
-				DE597DA52BC6C2B5002DFB11 /* ContentView.swift in Sources */,
+				DEEE86ED2BD9DF2B00D5AC49 /* ImagePicker.swift in Sources */,
 				DEBB55B22BD1245E001B31B9 /* EmojiDraw.swift in Sources */,
 				DE597DCF2BC6E0B9002DFB11 /* InputView.swift in Sources */,
-				DE7D0BE62BCAB76200A13FBF /* ImagePicker.swift in Sources */,
+				DEB90B942BD9E41800122C47 /* CellView.swift in Sources */,
+				DEB90B962BD9EDF800122C47 /* ContentView.swift in Sources */,
 				DE85CF452BCE032B00879A8C /* File.swift in Sources */,
 				DE597DA32BC6C2B5002DFB11 /* nano_1App.swift in Sources */,
 				DE597DCD2BC6C2C6002DFB11 /* CalenderView.swift in Sources */,

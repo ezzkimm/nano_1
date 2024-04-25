@@ -25,7 +25,6 @@ struct todayInput{
 
 @Model
 class DiaryInput {
-//    @Attribute(.unique) var id: UUID = UUID()
     @Attribute(.unique) var time: String
     var content: String
     var selectEmoji: String
@@ -65,19 +64,6 @@ func convertDateString(_ dateString: String) -> String {
     
     return "\(year)년 \(month)월 \(day)일"
 }
-//
-//@Model
-//struct diaryInput {
-//    @Attribute (.unique) var today: Date
-//    var diary : String
-//    var image: UIImage = UIImage()
-//
-//    
-//    init(today: Date, diary: String, image: UIImage) {
-//        self.today = today
-//        self.diary = diary
-//        self.image = image
-//    }
-//}
+
 
 
